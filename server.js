@@ -10,7 +10,13 @@ connectDB();
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173',  // Specify the frontend URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Allowed methods
+  credentials: true  // If you're sending cookies or HTTP Authentication
+}));
+
+
 
 // API routes
 app.use('/api/users', require('./routes/userRoutes'));
