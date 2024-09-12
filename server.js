@@ -1,7 +1,7 @@
 const express = require('express');
-const dotenv = require('dotenv');
-const connectDB = require('./config/db');
 const cors = require('cors');
+const dotenv = require('dotenv');
+const connectDB = require('./config/db'); // Your DB config file
 
 dotenv.config();
 
@@ -11,29 +11,17 @@ connectDB();
 const app = express();
 app.use(express.json());
 
-// Configure CORS settings
+// Enable CORS for requests from localhost:5173
 app.use(cors({
-  origin: 'http://localhost:5173',  // Specify the frontend URL
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  // Allowed methods
-  allowedHeaders: ['Content-Type', 'Authorization'],  // Specify allowed headers
-  credentials: true  // If you're sending cookies or HTTP Authentication
+  origin: 'http://localhost:5173',  // Allow only this origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  // Allowed HTTP methods
+  credentials: true  // If you're using cookies or HTTP authentication
 }));
 
-// Handle preflight OPTIONS requests
-app.options('*', cors());  // This will handle preflight requests
-
 // API routes
-app.use('/api/users', require('./routes/userRoutes'));
-app.use('/api/forms', require('./routes/formRoutes'));
-app.use('/api/projects', require('./routes/projectRoutes'));
+app.use('/api/users', require('./routes/userRoutes'));  // User routes
+app.use('/api/forms', require('./routes/formRoutes'));  // Form routes
+app.use('/api/projects', require('./routes/projectRoutes'));  // Project routes
 
 const PORT = process.env.PORT || 5002;
-
-const server = app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
-// Handle unhandled promise rejections
-process.on('unhandledRejection', (err) => {
-  console.log(`Error: ${err.message}`);
-  // Close server and exit process
-  server.close(() => process.exit(1));
-});
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
