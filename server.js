@@ -13,7 +13,7 @@ app.use(express.json());
 
 // Enable CORS for requests from localhost:5173 or from other domains
 app.use(cors({
-  origin: 'https://from-builder-backend.vercel.app',  // Allow your frontend URL (or change this for production)
+  origin: 'https://v0-cyan.vercel.app',  // Allow your frontend URL (or change this for production)
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  // Allowed HTTP methods
   credentials: true  // If you're using cookies or HTTP authentication
 }));
