@@ -10,13 +10,17 @@ connectDB();
 
 const app = express();
 app.use(express.json());
+
+// Configure CORS settings
 app.use(cors({
   origin: 'http://localhost:5173',  // Specify the frontend URL
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Allowed methods
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  // Allowed methods
+  allowedHeaders: ['Content-Type', 'Authorization'],  // Specify allowed headers
   credentials: true  // If you're sending cookies or HTTP Authentication
 }));
 
-
+// Handle preflight OPTIONS requests
+app.options('*', cors());  // This will handle preflight requests
 
 // API routes
 app.use('/api/users', require('./routes/userRoutes'));
@@ -24,7 +28,6 @@ app.use('/api/forms', require('./routes/formRoutes'));
 app.use('/api/projects', require('./routes/projectRoutes'));
 
 const PORT = process.env.PORT || 5002;
-
 
 const server = app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
