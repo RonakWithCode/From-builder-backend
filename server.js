@@ -11,9 +11,9 @@ connectDB();
 const app = express();
 app.use(express.json());
 
-// Enable CORS for requests from localhost:5173
+// Enable CORS for requests from localhost:5173 or from other domains
 app.use(cors({
-  origin: 'http://localhost:5173',  // Allow only this origin
+  origin: 'http://localhost:5173',  // Allow your frontend URL (or change this for production)
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  // Allowed HTTP methods
   credentials: true  // If you're using cookies or HTTP authentication
 }));
@@ -28,5 +28,4 @@ app.use('/api/users', require('./routes/userRoutes'));  // User routes
 app.use('/api/forms', require('./routes/formRoutes'));  // Form routes
 app.use('/api/projects', require('./routes/projectRoutes'));  // Project routes
 
-const PORT = process.env.PORT || 5002;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+module.exports = app;  // Export the app for Vercel
