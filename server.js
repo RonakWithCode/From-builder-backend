@@ -18,6 +18,11 @@ app.use(cors({
   credentials: true  // If you're using cookies or HTTP authentication
 }));
 
+// Add a test GET route for Postman or browser testing
+app.get('/api/test', (req, res) => {
+  res.json({ message: "API is working correctly!" });
+});
+
 // API routes
 app.use('/api/users', require('./routes/userRoutes'));  // User routes
 app.use('/api/forms', require('./routes/formRoutes'));  // Form routes
